@@ -1,0 +1,22 @@
+before_script:
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
+  - ./gradlew -v
+
+stages:
+  - build
+  - sonarqube
+
+build:
+  tags:
+    - java
+  stage: build
+  script:
+    - ./gradlew build -x test -x runFormat
+
+sonarqube:
+  tags:
+    - java
+  stage: sonarqube
+  script:
+    - ./gradlew build sonarqube -x test -x runFormat

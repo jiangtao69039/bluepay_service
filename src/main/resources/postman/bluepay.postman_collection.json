@@ -1,0 +1,183 @@
+{
+	"variables": [],
+	"info": {
+		"name": "bluepay",
+		"_postman_id": "8d6aa7d1-1306-e851-9fa8-ae60415f8828",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://120.76.101.146:21921/indonesia/express/gather/dr?price=20000&paymentCode=8359190213627331&bankType=permata&cardNo=56994147426768475421&provider=atm",
+			"request": {
+				"url": {
+					"raw": "http://120.76.101.146:21921/indonesia/express/gather/dr?price=20000&paymentCode=8359190213627331&bankType=permata&cardNo=56994147426768475421&provider=atm",
+					"protocol": "http",
+					"host": [
+						"120",
+						"76",
+						"101",
+						"146"
+					],
+					"port": "21921",
+					"path": [
+						"indonesia",
+						"express",
+						"gather",
+						"dr"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "20000",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "paymentCode",
+							"value": "8359190213627331",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "bankType",
+							"value": "permata",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "cardNo",
+							"value": "56994147426768475421",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "provider",
+							"value": "atm",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "productId",
+							"value": "2257",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "transactionId",
+							"value": "432cba35ee97477f994d5cd4c8e6e45d20190213160379",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "20000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "promotionId",
+							"value": "1000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "ui",
+							"value": "none",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "payType",
+							"value": "atm",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "bankType",
+							"value": "permata",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": "test完成付款"
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.104.109.123:84/bluepay-service/pay/loan",
+			"request": {
+				"url": "http://47.104.109.123:84/bluepay-service/pay/loan",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"notifyType\":\"http\",\n    \"nation\":\"ID\",\n    \"price\":20000,\n    \"channelSpecialParams\":{\n        \"payeeName\":\"Afif Asrif\",\n        \"payeeBankName\":\"ARTA GRAHA\",\n        \"productId\":\"2257\",\n        \"payeeType\":\"NORMAL\",\n        \"payeeAccount\":\"1077098557\"\n    },\n    \"outTradeNo\":\"a3eb39f673eb404590e9659a0017aa06\",\n    \"mobile\":\"082197662283\",\n    \"notifyUrl\":\"http://47.104.109.123:84/bluepay-service/callback/testNotify\",\n    \"currency\":\"IDR\",\n    \"channelBizCode\":\"loan_fintech_bluepay\",\n    \"channelCode\":\"bluepay\",\n    \"passBack\":{\n    \t\"p1\":\"v1\",\n    \t\"p2\":\"v2\"\n    }\n}"
+				},
+				"description": "统一放款接口"
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.104.109.123:84/bluepay-service/pay/gather",
+			"request": {
+				"url": "http://47.104.109.123:84/bluepay-service/pay/gather",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"notifyType\":\"http\",\n    \"nation\":\"ID\",\n    \"price\":20000,\n    \"channelSpecialParams\":{\n        \"payType\":\"atm\",\n        \"productId\":\"2257\",\n        \"bankType\":\"permata\"\n    },\n    \"outTradeNo\":\"11552wfe70d42e082fc9331fe41742d2\",\n    \"mobile\":\"082197662283\",\n    \"notifyUrl\":\"http://47.104.109.123:84/bluepay-service/callback/testNotify\",\n    \"currency\":\"IDR\",\n    \"channelBizCode\":\"gather_dynamic_VA_bluepay\",\n    \"channelCode\":\"bluepay\"\n}\n"
+				},
+				"description": "统一收款接口"
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.104.109.123:84/bluepay-service/pay/query",
+			"request": {
+				"url": "http://47.104.109.123:84/bluepay-service/pay/query",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"transactionCode\":\"00ef1226fb4d4f9d83e158b1394e185d\"}"
+				},
+				"description": "统一查询接口"
+			},
+			"response": []
+		}
+	]
+}

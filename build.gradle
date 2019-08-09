@@ -1,0 +1,83 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.13.RELEASE") // 1.5.13.RELEASE 正常 , 2.0.2.RELEASE 不能注入
+    }
+}
+plugins {
+    id 'java'
+    id 'application'
+    id "org.sonarqube" version "2.6.2"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+sourceCompatibility = '1.8'
+
+
+// 强制对代码做格式化
+task runFormat(type: JavaExec) {
+    def mainJavaFiles = sourceSets.main.allJava.files
+    mainJavaFiles.removeIf { file -> file.name.endsWith('module-info.java') }
+    classpath = fileTree(dir: "gradle/format", include: '*.jar')
+    main 'com.google.googlejavaformat.java.Main'
+    args '--replace'
+    args mainJavaFiles
+    args sourceSets.test.allJava.files
+}
+
+compileJava.dependsOn runFormat
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-web'
+    	compile 'org.springframework.boot:spring-boot-devtools'
+    	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    	compile 'org.springframework.boot:spring-boot-starter-data-redis'
+    	compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+
+    	compile 'com.fasterxml.jackson.core:jackson-databind:2.6.7.1'
+    	compile 'org.apache.commons:commons-lang3:3.5'
+    	compile 'commons-beanutils:commons-beanutils:1.9.3'
+    	compile 'commons-validator:commons-validator:1.6'
+    	compile 'org.apache.httpcomponents:httpclient:4.5.4'
+    	compile 'com.google.code.gson:gson:+'
+    	//compile 'com.alibaba:fastjson:1.2.29'
+	// https://mvnrepository.com/artifact/com.alibaba/fastjson
+		compile group: 'com.alibaba', name: 'fastjson', version: '1.2.54'
+
+		compile 'org.redisson:redisson:3.5.0'
+
+    	compile fileTree(dir: 'lib',includes: ['*jar'])
+    	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+
+    	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-sqs
+    	//compile group: 'com.amazonaws', name: 'aws-java-sdk-sqs', version: '1.11.270'
+
+    	compile 'com.amazonaws:aws-java-sdk-core'
+    	compile 'com.amazonaws:aws-java-sdk-dynamodb'
+    	compile 'com.amazonaws:aws-java-sdk-kinesis'
+    	compile 'com.amazonaws:aws-java-sdk-sqs'
+	
+
+ 	testCompile 'org.springframework.boot:spring-boot-starter-test'
+    	testCompile 'org.springframework:spring-test'
+    	testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.+'
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:+"
+    }
+}

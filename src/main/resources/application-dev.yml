@@ -1,0 +1,44 @@
+server:
+  port: ${SERVER_PORT:8094}
+spring:
+
+default:
+  primary:
+     datasource:
+        url: jdbc:postgresql://127.0.0.1:5432/panda_data?tcpKeepAlive=true&autoReconnect=true&PGTZ=8
+        username: panda
+        password: panda2018
+        driverClassName: org.postgresql.Driver
+        #初始化连接数
+        initialSize: 5
+        #最多空闲连接数
+        maxIdle: 5
+        #最大链接数
+        maxActive: 30
+        #配置获取连接等待超时的时间,单位毫秒
+        maxWait: 60000
+        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        #校验sql
+        validationQuery: SELECT 1
+        #获取链接时，验证连接可用性
+        testOnBorrow: true
+
+thirdparty:
+  bluepay:
+    productId:
+    productIdKey:
+    operatorId:
+
+
+url:
+   bluepay:
+     #收款
+     gatherUrl: http://test.webpay.bluepay.tech/bluepay/offline.php
+     #放款
+     fintechUrl: http://120.76.101.146:8160/charge/indonesiaFintechTransfer/transferBalance
+     #查询
+     fintechQueryUrl: http://120.76.101.146:8160/charge/indonesiaFintechTransfer/queryTransfer
+     #查询
+     gatherQueryUrl: http://120.76.101.146:8160/thaiCharge/service/queryTransDetail
+
